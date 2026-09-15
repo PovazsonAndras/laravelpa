@@ -1,20 +1,52 @@
-<div>
-    <!-- Walk as if you are kissing the Earth with your feet. - Thich Nhat Hanh -->
-    
-</div>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Megyék</title>
-</head>
-<body>
-    <h1>Megyék listája</h1>
-    <ul>
-        @foreach ($counties as $county)
-            <li>{{ $county->name }}</li>
-        @endforeach
-    </ul>
-</body>
-</html>
+@extends('layouts.app')
 
+@section('title', __('Megyék listája'))
 
+@section('content')
+<h1>{{ __('Megyék') }}</h1>
+
+  @include('layouts.toolbar', [
+      'isAuthenticated' => $isAuthenticated,
+      'routes' => [
+          'create' => route('counties.create'),
+          'csv' => route('counties.export.csv'),
+          'pdf' => route('counties.export.pdf'),
+          'mail' => route('counties.mail'),
+      ]
+  ])
+
+  @include('layouts.flash')
+
+  <table>
+      <thead>
+      <tr>
+          <th>#</th>
+          <th>{{ __('Név') }}</th>
+          <th>{{ __('Műveletek') }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      @forelse($entities as $maker)
+          <tr>
+              <td>{{ $maker->id }}</td>
+              <td>{{ $maker->name }}</td>
+              <td>
+                  <a href="{{ route('counties.show', $maker->id) }}">{{ __('Megtekintés') }}</a>
+                  @if($isAuthenticated)
+                      <a href="{{ route('counties.edit', $maker->id) }}">{{ __('Szerkesztés') }}</a>
+                      <form action="{{ route('counties.destroy', $maker->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit">{{ __('Törlés') }}</button>
+                      </form>
+                  @endif
+              </td>
+          </tr>
+      @empty
+          <tr>
+              <td colspan="3">{{ __('Nincs megye a rendszerben.') }}</td>
+          </tr>
+      @endforelse
+      </tbody>
+  </table>
+@endsection

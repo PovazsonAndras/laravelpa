@@ -1,3 +1,22 @@
-<div>
-    <!-- Simplicity is the consequence of refined emotions. - Jean D'Alembert -->
-</div>
+@extends('layouts.app')
+
+@section('title', __('Új megye létrehozása'))
+
+@section('content')
+<h1>{{ __('Új megye') }}</h1>
+
+  @include('layouts.flash')
+
+  <form action="{{ route('counties.store') }}" method="POST">
+      @csrf
+
+      <label for="name">{{ __('Megye neve') }}</label>
+      <input type="text" name="name" id="name" value="{{ old('name') }}" required>
+      @error('name')
+          <div class="error">{{ $message }}</div>
+      @enderror
+
+      <button type="submit">{{ __('Mentés') }}</button>
+      <a href="{{ route('counties.index') }}">{{ __('Mégse') }}</a>
+  </form>
+@endsection

@@ -36,9 +36,13 @@ class CountyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(County $county)
     {
-        //
+        $county->load('cities');
+    
+        return view('counties.show', [
+            'entity' => $county
+        ]);
     }
 
     /**
