@@ -5,13 +5,15 @@
 @section('content')
 <h1>{{ __('Megyék') }}</h1>
 
-  @include('layouts.toolbar', [
+@include('layouts.toolbar', [
       'isAuthenticated' => $isAuthenticated,
       'routes' => [
           'create' => route('counties.create'),
-          'csv' => route('counties.export.csv'),
-          'pdf' => route('counties.export.pdf'),
-          'mail' => route('counties.mail'),
+          'csv' => '#',
+          'pdf' => '#',
+          'mail' => '#',
+      ]
+  ])
       ]
   ])
 
