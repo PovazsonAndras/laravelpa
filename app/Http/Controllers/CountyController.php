@@ -10,7 +10,7 @@ class CountyController extends Controller
     public function index()
     {
         $entities = County::get();
-        $isAuthenticated = false; // egyelőre nincs bejelentkezés/jogosultságkezelés kiépítve
+        $isAuthenticated = true; // egyelőre nincs bejelentkezés/jogosultságkezelés kiépítve
 
         return view('counties.index', compact('entities', 'isAuthenticated'));
     }
@@ -40,18 +40,31 @@ class CountyController extends Controller
         ]);
     }
 
-    public function edit(string $id)
+    public function edit(County $county)
     {
-        //
+        return view('counties.edit', compact('county'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, County $county)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $county->update($validated);
+
+        return redirect()
+            ->route('counties.show', $county)
+            ->with('status', 'Megye frissítve!');
     }
 
-    public function destroy(string $id)
+
+    public function destroy(County $county)
     {
-        //
+        $county->delete();
+
+        return redirect()
+            ->route('counties.index')
+            ->with('status', 'Megye törölve!');
     }
 }

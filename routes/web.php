@@ -11,3 +11,5 @@ Route::get('/counties', [CountyController::class, 'index'])->name('counties.inde
 Route::get('/counties/create', [CountyController::class, 'create'])->name('counties.create');
 Route::post('/counties', [CountyController::class, 'store'])->name('counties.store');
 Route::get('/counties/{county}', [CountyController::class, 'show'])->name('counties.show');
+Route::get('/counties/{county}/edit', [CountyController::class, 'edit'])->name('counties.edit');
+Route::delete('/counties/{county}', [CountyController::class, 'destroy'])->name('counties.destroy');

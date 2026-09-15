@@ -14,8 +14,6 @@
           'mail' => '#',
       ]
   ])
-      ]
-  ])
 
   @include('layouts.flash')
 
