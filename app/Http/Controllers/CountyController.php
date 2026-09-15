@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\App\Models;
+use App\Models\County;
 
 class CountyController extends Controller
 {
